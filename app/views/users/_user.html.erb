@@ -1,0 +1,17 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Login:</strong>
+    <%= user.login %>
+    <% if current_user.avatar.present? %>
+      <%= image_tag(current_user.avatar.variant(resize_to_fill: [50, 50]), class: "rounded-circle") %>
+    <% else %>
+      <class="rounded-circle" src="/assets/default_avatar_small.jpg">
+    <% end %>
+  </p>
+
+  <p>
+    <strong>About me:</strong>
+    <%= user.about_me %>
+  </p>
+
+</div>
