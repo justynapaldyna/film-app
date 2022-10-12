@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @user %>
+
+<div>
+  <%= link_to "Edit your profile", edit_user_path(@user) %> |
+  <%= link_to "Advanced settings", edit_registration_path(@user) %> 
+  <p>
+  <%= link_to "Back to users", users_path %>
+  </p>
+
+  <%= button_to "Delete your account", @user, method: :delete %>
+</div>
