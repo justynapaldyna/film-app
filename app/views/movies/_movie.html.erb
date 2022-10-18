@@ -1,0 +1,50 @@
+<div id="<%= dom_id movie %>">
+
+  <p>
+    <% if movie.image.present? %>
+      <%= image_tag(movie.image, height: '200px') %>
+    <% else %>
+      <%= image_tag "default-movie.png", height: '200px' %>
+    <% end %>
+  </p>
+
+  <h2>
+    <strong><%= movie.title %></strong>
+  </h2>
+
+  <p>
+    <strong>Release date:</strong>
+    <%= movie.year %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= link_to movie.category.name, movie.category %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= movie.description %>
+  </p>
+
+  <p>
+    <strong>Movie length:</strong>
+    <%= movie.movie_length %>
+  </p>
+
+  <p>
+    <strong>Director:</strong>
+    <%= movie.director %>
+  </p>
+
+  <p>
+    <strong>Language:</strong>
+    <%= movie.language %>
+  </p>
+
+  <p>
+    <strong>Rating:</strong>
+    <%= movie.rating %>
+  </p>
+
+</div>

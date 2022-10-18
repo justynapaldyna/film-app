@@ -1,0 +1,13 @@
+<div id="<%= dom_id category %>">
+  <h2>
+    <strong>Category:</strong>
+    <%= category.name %>
+  </h2>
+
+  <% category.movies.each do |movie| %>
+    <p>
+      <%= movie.title %> | <%= link_to "View movie", movie %>
+    </p>
+  <% end %> 
+
+</div>
