@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_categories
+  before_action :authenticate_user!, only: :create
+  before_action :set_categories, only: [:create, :edit]
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/new
   def new
-    @movie = current_user.movies.build
+    @movie = Movie.new
   end
 
   # GET /movies/1/edit
