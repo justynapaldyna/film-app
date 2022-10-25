@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe MoviesController, type: :controller do
 
     describe 'GET #index' do
-        subject { get :index }
+      subject { get :index }
 
-        it 'shows all the movies' do
+      it 'shows all the movies' do
         subject
         expect(assigns(:movies).to_a).to eq(Movie.all.to_a)
-        end
+      end
     end
 
   describe 'POST #create' do 
@@ -18,7 +18,6 @@ RSpec.describe MoviesController, type: :controller do
     context 'when user is not authorized' do
       context 'valid params' do
         let(:params) { { movie: { title: 'Movie title', year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user: user, category: category } } }
-
         it 'creates movie' do
           expect{ subject }.to change{ Movie.count }.by(0)
         end
@@ -30,7 +29,6 @@ RSpec.describe MoviesController, type: :controller do
 
       context 'valid params' do 
         let(:params) { { movie: { title: 'Movie title', year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user: user, category: category } } }
-
         it 'creates movie' do
           expect{ subject }.to change{ Movie.count }.by(1)
         end
@@ -42,7 +40,6 @@ RSpec.describe MoviesController, type: :controller do
 
       context 'invalid params' do
         let(:params) { { movie: { title: nil, year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user: user, category: category } } }
-
         it 'doesnt create movie' do
           expect{ subject }.not_to change{ Movie.count }
         end
@@ -56,7 +53,6 @@ RSpec.describe MoviesController, type: :controller do
 
   describe 'GET #new' do
     subject { get :new }
-
     it 'initializes empty movie' do
       subject
       expect(assigns(:movie).attributes).to eq(Movie.new.attributes)

@@ -54,17 +54,17 @@ class MoviesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_movie
-      @movie = Movie.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_movie
+    @movie = Movie.find(params[:id])
+  end
 
-    def set_categories
-      @categories = Category.all.order(:name)
-    end 
+  def set_categories
+    @categories = Category.all.order(:name)
+  end 
 
-    # Only allow a list of trusted parameters through.
-    def movie_params
-      params.require(:movie).permit(:title, :year, :description, :movie_length, :string, :director, :language, :rating, :category_id, :image )
-    end
+  # Only allow a list of trusted parameters through.
+  def movie_params
+    params.require(:movie).permit(:title, :year, :description, :movie_length, :string, :director, :language, :rating, :category_id, :image )
+  end
 end
