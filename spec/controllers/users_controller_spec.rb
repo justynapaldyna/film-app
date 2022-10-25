@@ -72,19 +72,36 @@ RSpec.describe UsersController, type: :controller do
     let!(:user) { create(:user) }
     subject { put :update, params: params }
 
-    context 'valid params' do
-      let(:params) { { id: user.id, user: { login: 'Gal A' } } }
+    context 'when user is not authorised' do
+    
+      context 'valid params' do
+        let(:params) { { id: user.id, user: { login: 'Gal A' } } }
 
-      it 'updates user' do
-        expect{ subject }.to change{ user.reload.login }.to('Gal A')
+        it 'updates user' do
+          expect{ subject }.not_to change{ user.reload.login }
+        end
       end
     end
 
-    context 'invalid params' do
-      let(:params) { { id: user.id, user: { login: nil } } }
 
-      it 'doesnt update user' do
-        expect{ subject }.not_to change{ user.reload.login }
+    context 'when user is authorised' do
+      before { sign_in user }
+
+      context 'valid params' do
+        before { sign_in user }
+        let(:params) { { id: user.id, user: { login: 'Gal A' } } }
+
+        it 'updates user' do
+          expect{ subject }.to change{ user.reload.login }.to('Gal A')
+        end
+      end
+
+      context 'invalid params' do
+        let(:params) { { id: user.id, user: { login: nil } } }
+
+        it 'doesnt update user' do
+          expect{ subject }.not_to change{ user.reload.login }
+        end
       end
     end
   end
@@ -93,8 +110,18 @@ RSpec.describe UsersController, type: :controller do
     let!(:user) { create(:user) }
     subject { delete :destroy, params: { id: user.id } }
 
-    it 'destroys user' do
-      expect{ subject }.to change{ User.count }.by(-1)
+    context 'when user is not authorised' do
+      it 'destroys user' do
+        expect{ subject }.to change{ User.count }.by(0)
+      end
+    end
+
+    context 'when user is authorised' do
+      before { sign_in user }
+
+      it 'destroys user' do
+        expect{ subject }.to change{ User.count }.by(-1)
+      end
     end
 
     it 'redirects properly' do
