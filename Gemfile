@@ -32,6 +32,12 @@ gem "jbuilder"
 gem 'devise'
 gem 'file_validators'
 
+group :development, :test do
+  gem 'rspec-rails', '~> 5.0.0'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
+end
+
 gem 'bootstrap', '~> 5.2.1'
 
 # Use Redis adapter to run Action Cable in production
