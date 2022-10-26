@@ -13,11 +13,12 @@ RSpec.describe MoviesController, type: :controller do
 
   describe 'POST #create' do 
     let(:user) { create(:user) }
+    let(:category) { create(:category) }
     subject { post :create, params: params }
 
     context 'when user is not authorized' do
       context 'valid params' do
-        let(:params) { { movie: { title: 'Movie title', year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user: user, category: category } } }
+        let(:params) { { movie: { title: 'Movie title', year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user_id: user.id , category_id: category.id } } }
         it 'creates movie' do
           expect{ subject }.to change{ Movie.count }.by(0)
         end
@@ -28,7 +29,7 @@ RSpec.describe MoviesController, type: :controller do
       before { sign_in user }
 
       context 'valid params' do 
-        let(:params) { { movie: { title: 'Movie title', year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user: user, category: category } } }
+        let(:params) { { movie: { title: 'Movie title', year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user_id: user.id, category_id: category.id } } }
         it 'creates movie' do
           expect{ subject }.to change{ Movie.count }.by(1)
         end
@@ -39,7 +40,7 @@ RSpec.describe MoviesController, type: :controller do
       end
 
       context 'invalid params' do
-        let(:params) { { movie: { title: nil, year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user: user, category: category } } }
+        let(:params) { { movie: { title: nil, year: '2022', description: 'Lorem Ipsum', movie_length: '1h0m', director: 'Mr Director', language: 'English', rating: 'PG-13', user_id: user.id, category_id: category.id  } } }
         it 'doesnt create movie' do
           expect{ subject }.not_to change{ Movie.count }
         end
@@ -84,10 +85,10 @@ RSpec.describe MoviesController, type: :controller do
     subject { put :update, params: params }
 
     context 'valid params' do
-      let(:params) { { id: movie.id, movie: { title: 'New Title' } } }
+      let(:params) { { id: movie.id, movie: { title: 'New New Title' } } }
 
       it 'updates movie' do
-        expect{ subject }.to change{ movie.reload.title }.to('New title')
+        expect{ subject }.to change{ movie.reload.title }.to('New New Title')
       end
     end
 
