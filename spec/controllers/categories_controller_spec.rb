@@ -16,14 +16,14 @@ RSpec.describe CategoriesController, type: :controller do
         subject { post :create, params: params }
 
         context 'valid params' do
-            let(:params) { { movie: { name: 'Costume drama' } } }
+            let(:params) { { category: { name: 'Costume drama' } } }
             it 'creates category' do
                 expect{ subject }.to change{ Category.count }.by(1)
             end
         end
 
         context 'invalid params' do
-            let(:params) { { movie: { name: nil } } }
+            let(:params) { { category: { name: nil } } }
             it 'does not create category' do
                 expect{ subject }.not_to change{ Category.count }
             end
@@ -48,7 +48,7 @@ RSpec.describe CategoriesController, type: :controller do
 
         it 'assigns proper category object' do 
             subject 
-            expect(assigns(:category)).to eq(movie)
+            expect(assigns(:category)).to eq(category)
         end
     end
 
