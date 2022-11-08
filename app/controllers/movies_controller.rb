@@ -1,7 +1,8 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [ :show, :edit, :update, :destroy ]
-  before_action :authenticate_user!, only: :create
-  before_action :set_categories, only: [:create, :edit]
+  before_action :authenticate_user!, only: [ :create, :update, :destroy ]
+  before_action :set_categories, only: [:new, :create, :edit]
+  before_action :if_admin, only: [ :create, :update, :destroy ]
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
@@ -66,5 +67,9 @@ class MoviesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def movie_params
     params.require(:movie).permit(:title, :year, :description, :movie_length, :string, :director, :language, :rating, :category_id, :image )
+  end
+
+  def if_admin 
+    redirect_to movies_url, notice: "Only Admins can undertake this action" unless current_user.admin?
   end
 end
