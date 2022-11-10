@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get 'admin/users'
     get 'admin/movies'
     get 'admin/show_movie'
-    get 'admin/show_user'
+    get 'admin/show_user/:id', to: 'admin#show_user', as: 'admin_user'
     get 'admin/edit_user'
   end
   

@@ -1,2 +1,34 @@
-<h1>Admin#show_user</h1>
-<p>Find me in app/views/admin/show_user.html.erb</p>
+<div>
+  <p>
+    <strong>Login:</strong>
+    <%= @user.login %>
+  </p>
+  <p>  
+    <% if current_user.avatar.present? %>
+      <%= image_tag(current_user.avatar, height: '120px', class: "rounded-circle") %>
+    <% else %>
+      <class="rounded-circle" src="/assets/images/default_avatar.jpg">
+    <% end %>
+  </p>
+  
+
+  <p>
+    <strong>About me:</strong>
+    <%= @user.about_me %>
+  </p>
+
+</div>
+
+<%= form_with(model: @user) do |form| %>
+    
+    <div>
+        <%= form.label :status %>
+        <%= form.select :status, User.statuses.keys.map{ |key| [key.humanize, key] }, selected: @user.status || :draft %>
+    </div>
+
+    <div>
+        <%= form.submit %>
+    </div>
+
+<% end %>
+
