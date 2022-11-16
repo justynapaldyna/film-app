@@ -1,2 +1,16 @@
-<h1>Admin#movies</h1>
-<p>Find me in app/views/admin/movies.html.erb</p>
+<div class="container">
+    <h1 class="text-center">Admin Panel</h1>
+    <%= render 'admin/nav_links' %>
+</div>
+
+<div id="movies">
+  <% @movies.each do |movie| %>
+    <%= render movie %>
+    <p>
+      <%= link_to "Show this movie", movie %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New movie", new_movie_path %>
+
