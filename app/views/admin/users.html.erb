@@ -5,7 +5,17 @@
 
 <div id="users">
   <% @users.each do |user| %>
-    <%= render user %>
+    <p>
+      <strong>Login:</strong>
+      <%= user.login %>
+    </p>
+    <p>  
+      <% if user.avatar.present? %>
+        <%= image_tag(user.avatar, height: '120px', class: "rounded-circle") %>
+      <% else %>
+        <class="rounded-circle" src="/assets/images/default_avatar.jpg">
+      <% end %>
+    </p>
     <p>
       <%= link_to "Show this user", admin_user_path(user) %>
     </p>
