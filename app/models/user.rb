@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
     has_many :movies
     has_one_attached :avatar
+    has_many :comments
 
     validates :login, presence: true
     validates :avatar, file_size: { less_than_or_equal_to: 5.megabytes },

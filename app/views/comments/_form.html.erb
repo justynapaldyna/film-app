@@ -1,0 +1,9 @@
+<p>
+    <strong>Add New Comment:</strong>
+<p>
+<form action ="<%= movie_comments_path(movie) %>" method="post">
+<textarea name="comment[body]" cols="30" rows="6"></textarea>
+<p>
+    <input type="submit" value="Submit">
+</p>
+</form>
