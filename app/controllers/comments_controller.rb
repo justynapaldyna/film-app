@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-    before_action :set_comment, only: %i[ show edit update destroy ]
+    before_action :set_comment, only: [ :show, :edit, :update, :destroy ]
+    before_action :authenticate_user!, only: [ :create, :update, :destroy ]
     def index
         @comments = Comment.all 
     end
@@ -15,13 +16,13 @@ class CommentsController < ApplicationController
     end
 
     def create
-        @comment = current_user.comments.new(comment_params) 
+        @comment = Comment.new(comment_params.merge( user: current_user )) 
 
         respond_to do |format|
             if @comment.save
               format.html { redirect_to movie_path(params[:movie_id]), notice: "Comment was successfully created." }
             else
-              format.html { render :new, status: :unprocessable_entity }
+              format.html { render ("movies/show"), status: :unprocessable_entity }
             end
         end
     end
@@ -31,7 +32,7 @@ class CommentsController < ApplicationController
             if @comment.update(comment_params)
               format.html { redirect_to movie_path(params[:movie_id]), notice: "Comment was successfully updated." }
             else
-              format.html { render :edit, status: :unprocessable_entity }
+              format.html { render ("movies/show"), status: :unprocessable_entity }
             end
         end
     end
@@ -40,7 +41,7 @@ class CommentsController < ApplicationController
         @comment.destroy
 
         respond_to do |format|
-            format.html { redirect_to movie_path(params[:movie_id]), notice: "Comment was successfully destroyed." }
+            format.html { redirect_to movies_path, notice: "Comment was successfully destroyed." }
         end
     end
 
@@ -51,7 +52,7 @@ class CommentsController < ApplicationController
     end
 
     def comment_params
-        params.require(:comment).permit(:body).merge(movie_id: params[:movie_id])
+        params.require(:comment).permit(:body, :user_id, :movie_id ).merge(movie_id: params[:movie_id])
     end
 
 end

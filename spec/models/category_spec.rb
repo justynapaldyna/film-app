@@ -17,7 +17,7 @@ describe Category, type: :model do
         end
 
         it 'valid with name' do
-            expect(Category.new(name: 'Drama')).to be_valid
+            expect(Category.new(name: 'Dramas')).to be_valid
         end
     end
 end

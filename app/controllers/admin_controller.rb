@@ -28,7 +28,7 @@ class AdminController < ApplicationController
       if @user.update(user_params)
         format.html { redirect_to admin_users_path, notice: "User was successfully updated." }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render ("movies/show"), status: :unprocessable_entity }
       end
     end
   end
