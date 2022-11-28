@@ -1,6 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @movie %>
+<p>
+Comments:
+<%= render @movie.comments.order(id: :desc) %>
+<%= render partial: 'comments/form', locals: { movie: @movie } %>
+</p>
 
 <div>
   <%= link_to "Edit this movie", edit_movie_path(@movie) %> |

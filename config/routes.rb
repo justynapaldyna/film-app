@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   end
   
   resources :categories
-  resources :movies
+  resources :movies do 
+    resources :comments, only: [:create] 
+  end
+  
+
   get 'home/index'
 end
