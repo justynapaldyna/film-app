@@ -10,10 +10,6 @@ class AdminController < ApplicationController
     @movies = Movie.all
   end
 
-  def show_movie
-    @movie = Movie.find(params[:id])
-  end
-
   def show_user
     @user = User.find(params[:id])
   end
