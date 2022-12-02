@@ -11,8 +11,8 @@ RSpec.describe MoviesController, type: :controller do
       end
     end
 
-  describe 'POST #create' do 
-    let(:user) { create(:user) }
+  describe 'POST #create' do
+    let!(:user) { create(:user, status: :admin ) }
     let(:category) { create(:category) }
     subject { post :create, params: params }
 
@@ -35,7 +35,7 @@ RSpec.describe MoviesController, type: :controller do
         end
 
         it 'redirects properly' do
-          expect(subject).to redirect_to(movies_path)
+          expect(subject).to redirect_to(movie_url(assigns(:movie)))
         end
       end
 
@@ -81,36 +81,64 @@ RSpec.describe MoviesController, type: :controller do
   end
 
   describe 'PUT #update' do
+    let!(:user) { create(:user, status: :admin ) }
     let!(:movie) { create(:movie) }
     subject { put :update, params: params }
 
-    context 'valid params' do
-      let(:params) { { id: movie.id, movie: { title: 'New New Title' } } }
+    context 'when user is authorized' do 
+      before { sign_in user }
+      
+      context 'valid params' do
+        let(:params) { { id: movie.id, movie: { title: 'New New Title' } } }
 
-      it 'updates movie' do
-        expect{ subject }.to change{ movie.reload.title }.to('New New Title')
+        it 'updates movie' do
+          expect{ subject }.to change{ movie.reload.title }.to('New New Title')
+        end
+      end
+
+      context 'invalid params' do
+        let(:params) { { id: movie.id, movie: { title: nil } } }
+
+        it 'doesnt update movie' do
+          expect{ subject }.not_to change{ movie.reload.title }
+        end
       end
     end
 
-    context 'invalid params' do
-      let(:params) { { id: movie.id, movie: { title: nil } } }
+    context 'when user is not authorized' do 
 
-      it 'doesnt update movie' do
-        expect{ subject }.not_to change{ movie.reload.title }
+      context 'valid params' do
+        let(:params) { { id: movie.id, movie: { title: 'New New Title' } } }
+        
+        it 'doesnt update movie' do
+          expect{ subject }.not_to change{ movie.reload.title }
+        end
       end
     end
   end
 
   describe 'DELETE #destroy' do
+    let!(:user) { create(:user, status: :admin ) }
     let!(:movie) { create(:movie) }
     subject { delete :destroy, params: { id: movie.id } }
 
-    it 'destroys movie' do
-      expect{ subject }.to change{ Movie.count }.by(-1)
-    end
+    context 'when user is authorised' do
+      before { sign_in user }
 
-    it 'redirects properly' do
-      expect(subject).to redirect_to(movies_path)
+      it 'destroys movie' do
+        expect{ subject }.to change{ Movie.count }.by(-1)
+      end
+
+      it 'redirects properly' do
+        expect(subject).to redirect_to(movies_path)
+      end
+    end
+    
+    context 'when user is not authorized' do 
+      
+      it 'does not destroy the movie' do
+        expect{ subject }.not_to change{ Movie.count }
+      end
     end
   end
 end

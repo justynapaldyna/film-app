@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :movies do 
     resources :comments, only: [:create] 
   end
+  resources :comments
   
-
   get 'home/index'
 end
