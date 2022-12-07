@@ -17,11 +17,13 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    
   end
 
   # POST /categories or /categories.json
   def create
     @category = Category.new(category_params)
+    authorize @category
 
     respond_to do |format|
       if @category.save
@@ -34,6 +36,7 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
+    authorize @category
     respond_to do |format|
       if @category.update(category_params)
         format.html { redirect_to category_url(@category), notice: "Category was successfully updated." }
@@ -45,6 +48,7 @@ class CategoriesController < ApplicationController
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
+    authorize @category
     @category.destroy
 
     respond_to do |format|

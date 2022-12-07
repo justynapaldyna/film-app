@@ -2,28 +2,24 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [ :show, :edit, :update, :destroy ]
   before_action :authenticate_user!, only: [ :create, :update, :destroy ]
   before_action :set_categories, only: [:new, :create, :edit]
-  before_action :if_admin, only: [ :create, :update, :destroy ]
-  # GET /movies or /movies.json
+
   def index
     @movies = Movie.all
   end
 
-  # GET /movies/1 or /movies/1.json
   def show
   end
 
-  # GET /movies/new
   def new
     @movie = Movie.new
   end
 
-  # GET /movies/1/edit
   def edit
   end
 
-  # POST /movies or /movies.json
   def create
     @movie = current_user.movies.build(movie_params)
+    authorize @movie
 
     respond_to do |format|
       if @movie.save
@@ -34,8 +30,8 @@ class MoviesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /movies/1 or /movies/1.json
   def update
+    authorize @movie
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to movie_url(@movie), notice: "Movie was successfully updated." }
@@ -45,8 +41,8 @@ class MoviesController < ApplicationController
     end
   end
 
-  # DELETE /movies/1 or /movies/1.json
   def destroy
+    authorize @movie
     @movie.destroy
 
     respond_to do |format|
@@ -55,7 +51,7 @@ class MoviesController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
+
   def set_movie
     @movie = Movie.find(params[:id])
   end
@@ -67,9 +63,5 @@ class MoviesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def movie_params
     params.require(:movie).permit(:title, :year, :description, :movie_length, :string, :director, :language, :rating, :category_id, :user_id, :image )
-  end
-
-  def if_admin 
-    redirect_to movies_url, notice: "Only Admins can undertake this action" unless current_user.admin?
   end
 end
