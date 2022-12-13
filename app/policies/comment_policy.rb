@@ -1,17 +1,8 @@
 class CommentPolicy < ApplicationPolicy
-    attr_reader :user, :comment
-  
-    def initialize(user, comment)
-      @user = user
-      @comment = comment
-    end
-  
     def index?
-      user.admin?
     end
   
     def show?
-      user.admin?
     end
   
     def create?
@@ -23,7 +14,7 @@ class CommentPolicy < ApplicationPolicy
     end
   
     def update?
-      user.admin?
+      record.user_id == user.id
     end
   
     def edit?
@@ -31,6 +22,6 @@ class CommentPolicy < ApplicationPolicy
     end
   
     def destroy?
-      user.admin?
+      record.user_id == user.id || user.admin?
     end
-  end
+end

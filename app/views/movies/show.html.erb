@@ -5,11 +5,13 @@
 Comments:
 <%= render @movie.comments.order(id: :desc) %>
 <%= render partial: 'comments/form', locals: { movie: @movie } %>
+<%= button_to "Delete comment", @comment, method: :delete if policy(Comment).destroy? %>
+
 </p>
 
 <div>
-  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
+  <%= link_to "Edit this movie", edit_movie_path(@movie) if policy(Movie).edit? %> 
   <%= link_to "Back to movies", movies_path %>
 
-  <%= button_to "Destroy this movie", @movie, method: :delete %>
+  <%= button_to "Destroy this movie", @movie, method: :delete if policy(Movie).destroy? %>
 </div>

@@ -38,6 +38,7 @@ class CommentsController < ApplicationController
     end
 
     def destroy
+        authorize @comment
         @comment.destroy
 
         respond_to do |format|
