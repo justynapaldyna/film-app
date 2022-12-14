@@ -4,8 +4,9 @@
 <p>
 Comments:
 <%= render @movie.comments.order(id: :desc) %>
+Add new comment:
 <%= render partial: 'comments/form', locals: { movie: @movie } %>
-<%= button_to "Delete comment", @comment, method: :delete if policy(Comment).destroy? %>
+
 
 </p>
 

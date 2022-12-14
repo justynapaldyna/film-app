@@ -7,9 +7,13 @@ Rails.application.routes.draw do
   resources :users
   resources :categories
   resources :movies do 
-    resources :comments, only: [:create] 
+    resources :comments
   end
-  resources :comments
+  
+
+ 
+
+  
   
   get 'admin', to: 'admin#index'
   get 'admin/index'

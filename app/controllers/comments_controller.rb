@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+    
+    before_action :set_movie, only: [:show, :edit, :create, :update, :destroy]
     before_action :set_comment, only: [ :show, :edit, :update, :destroy ]
     before_action :authenticate_user!, only: [ :create, :update, :destroy ]
     def index
@@ -16,7 +18,7 @@ class CommentsController < ApplicationController
     end
 
     def create
-        @comment = Comment.new(comment_params.merge( user: current_user )) 
+        @comment = @movie.comments.create(comment_params.merge( user: current_user )) 
 
         respond_to do |format|
             if @comment.save
@@ -30,7 +32,7 @@ class CommentsController < ApplicationController
     def update
         respond_to do |format|
             if @comment.update(comment_params)
-              format.html { redirect_to movie_path(params[:movie_id]), notice: "Comment was successfully updated." }
+              format.html { redirect_to @comment.movie, notice: "Comment was successfully updated." }
             else
               format.html { render ("movies/show"), status: :unprocessable_entity }
             end
@@ -49,11 +51,15 @@ class CommentsController < ApplicationController
     private
 
     def set_comment
-        @comment = Comment.find(params[:id])
+        @comment = @movie.comments.find(params[:id])
+    end
+
+    def set_movie
+        @movie = Movie.find(params[:movie_id])
     end
 
     def comment_params
-        params.require(:comment).permit(:body, :user_id, :movie_id ).merge(movie_id: params[:movie_id])
+        params.require(:comment).permit(:body, :user_id, :movie_id )
     end
 
 end

@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
   end
 
   def show
+    @comment = @movie.comments.build
   end
 
   def new
