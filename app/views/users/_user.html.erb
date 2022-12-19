@@ -4,8 +4,8 @@
     <%= user.login %>
   </p>
   <p>  
-    <% if current_user.avatar.present? %>
-      <%= image_tag(current_user.avatar, height: '120px', class: "rounded-circle") %>
+    <% if user.avatar.present? %>
+      <%= image_tag(user.avatar, height: '120px', class: "rounded-circle") %>
     <% else %>
       <class="rounded-circle" src="/assets/images/default_avatar.jpg">
     <% end %>

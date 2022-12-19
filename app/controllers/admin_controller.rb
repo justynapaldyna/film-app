@@ -1,25 +1,29 @@
 class AdminController < ApplicationController
-  def index
-  end
+  before_action :authenticate_user!
 
   def users
     @users = User.all
+    authorize @users, :index?
   end
 
   def movies
     @movies = Movie.all
+    authorize @movies, :index?
   end
 
   def show_user
     @user = User.find(params[:id])
+    authorize @user, :show?
   end
 
   def edit_user
     @user = User.find(params[:id])
+    authorize @user, :edit?
   end
 
   def update_user
     @user = User.find(params[:id])
+    authorize @user, :update?
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to admin_users_path, notice: "User was successfully updated." }

@@ -1,5 +1,14 @@
 <article>
     <p><%= comment.body %></p>
     <small> by  <%= comment.user.login %> at <%= comment.created_at %></small>
+    <% if policy(comment).destroy? %>
+        <%= button_to "Delete comment", [comment.movie, comment], method: :delete %>
+    <% end %>
+
+    <% if policy(comment).edit? %>
+        <p>
+            <%= link_to "Edit", edit_movie_comment_path(comment.movie, comment) %>
+         </p>
+    <% end %>
 </article>
 <hr />
