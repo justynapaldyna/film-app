@@ -21,7 +21,7 @@ class UserPolicy < ApplicationPolicy
     end
   
     def edit?
-      update?
+      user.admin? 
     end
   
     def destroy?
@@ -38,4 +38,4 @@ class UserPolicy < ApplicationPolicy
           end
         end
     end
-  end
+end
