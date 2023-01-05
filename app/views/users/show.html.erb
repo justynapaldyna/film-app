@@ -3,11 +3,12 @@
 <%= render @user %>
 
 <div>
-  <%= link_to "Edit your profile", edit_user_path(@user) %> |
-  <%= link_to "Advanced settings", edit_registration_path(@user) %> 
-  <p>
-  <%= link_to "Back to users", users_path %>
-  </p>
-
-  <%= button_to "Delete your account", @user, method: :delete %>
+  <% if current_user == @user %>
+    <%= link_to "Edit your profile", edit_user_path(@user) %> |
+    <%= link_to "Advanced settings", edit_registration_path(@user) %> 
+    <p>
+      <%= link_to "Back to users", users_path %>
+    </p>
+    <%= button_to "Delete your account", @user, method: :delete %>
+  <% end %>
 </div>

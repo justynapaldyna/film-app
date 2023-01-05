@@ -1,3 +1,7 @@
+<%= link_to root_path do %>
+    <%= image_tag "logo.png", height: '30px' %>
+<% end %>
+
 <div class='container'>
 <% if current_user %>
     <% if current_user.avatar.persisted? %>
@@ -13,4 +17,5 @@
     <%= link_to 'Sign in', new_user_session_path %>
     <%= link_to 'Register', new_user_registration_path %>
 <% end %>
+    <%= button_to 'Movies Database', movies_path, method: :get %>
 </div>
