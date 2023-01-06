@@ -16,6 +16,7 @@
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
+# check: whenever -r
 # Clear: crontab -r
 # Update: whenever --update-crontab --set environment='development'
 
