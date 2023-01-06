@@ -36,6 +36,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
+  gem 'pundit-matchers', '~> 1.8.4'
 end
 
 gem 'bootstrap', '~> 5.2.1'
@@ -85,3 +86,5 @@ group :test do
 end
 
 gem "pundit", "~> 2.2"
+
+gem "whenever", "~> 1.0"
