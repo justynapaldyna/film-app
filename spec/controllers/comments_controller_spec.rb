@@ -75,7 +75,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     describe 'PUT #update' do 
-        let!(:user) { create(:user) }
+        let!(:user) { User.create(id: 1) }
         let!(:comment) { create(:comment) }
         subject { put :update, params: params }
 
@@ -92,44 +92,81 @@ RSpec.describe CommentsController, type: :controller do
 
         context 'when user is authorized' do    
             before { sign_in user }
-            context 'valid params' do 
-                let(:params) { { id: comment.id, comment: { body: 'Test comment1' } } }
+            
+            context 'when it IS NOT own comment' do 
 
-                it 'updates comment' do 
-                    expect{ subject }.to change{ comment.reload.body }.to('Test comment1')
+                context 'valid params' do 
+                    let(:params) { { id: comment.id, comment: { body: 'Test comment1', user_id: 2 } } }
+
+                    it 'doesnt update comment' do 
+                        expect{ subject }.not_to change{ comment.reload.body }
+                    end
                 end
             end
-            
-            context 'invalid params' do 
-                let(:params) { { id: comment.id, comment: { body: nil } } }
 
-                it 'doesnt update comment' do 
-                    expect{ subject }.not_to change{ comment.reload.body }
+            context 'when it IS own comment' do 
+
+                context 'valid params' do 
+                    let(:params) { { id: comment.id, comment: { body: 'Test comment1', user_id: 1 } } }
+
+                    it 'updates comment' do 
+                        expect{ subject }.to change{ comment.reload.body }.to('Test comment1')
+                    end
+                end
+                
+                context 'invalid params' do 
+                    let(:params) { { id: comment.id, comment: { body: nil, user_id: 1 } } }
+
+                    it 'doesnt update comment' do 
+                        expect{ subject }.not_to change{ comment.reload.body }
+                    end
                 end
             end
         end
     end
 
     describe 'DELETE #destroy' do
-        let!(:user) { create(:user) } 
+        let!(:user) { User.create(id: 1) } 
         let!(:comment) { create(:comment) }
         subject { delete :destroy, params: { id: comment.id } }
 
         context 'when user is not authorised' do
-            it 'destroys comment' do
+            it 'does not destroy comment' do
               expect{ subject }.to change{ Comment.count }.by(0)
             end
         end
       
         context 'when user is authorised' do
         before { sign_in user }
-    
-            it 'destroys user' do
-                expect{ subject }.to change{ Comment.count }.by(-1)
+
+            context 'when it IS NOT own comment' do
+            let(:params) { { id: comment.id, comment: { user_id: 2 } } }
+                it 'does not destroy comment' do
+                    expect{ subject }.to change{ Comment.count }.by(0)
+                end
             end
-        
-            it 'redirects properly' do
-                expect(subject).to redirect_to(movies_path)
+
+            context 'when it IS NOT own comment, but user is ADMIN' do 
+            let!(:user) { User.create(id: 1, status: 1)}
+            let(:params) { { id: comment.id, comment: { user_id: 2 } } }
+                it 'destroys comment' do
+                    expect{ subject }.to change{ Comment.count }.by(-1)
+                end
+            
+                it 'redirects properly' do
+                    expect(subject).to redirect_to(movies_path)
+                end
+            end
+
+            context 'when it IS own comment' do 
+            let(:params) { { id: comment.id, comment: { user_id: 1 } } }
+                it 'destroys comment' do
+                    expect{ subject }.to change{ Comment.count }.by(-1)
+                end
+            
+                it 'redirects properly' do
+                    expect(subject).to redirect_to(movies_path)
+                end
             end
         end
     end
