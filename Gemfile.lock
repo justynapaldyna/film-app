@@ -110,6 +110,10 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
+    faraday (2.7.2)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
     ffi (1.15.5)
     file_validators (3.0.0)
       activemodel (>= 3.2)
@@ -164,8 +168,6 @@ GEM
       nio4r (~> 2.0)
     pundit (2.2.0)
       activesupport (>= 3.0.0)
-    pundit-matchers (1.8.4)
-      rspec-rails (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.4)
     rack-test (2.0.2)
@@ -225,6 +227,7 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.1)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -289,13 +292,13 @@ DEPENDENCIES
   debug
   devise
   factory_bot_rails
+  faraday
   file_validators
   importmap-rails
   jbuilder
   pry-rails (~> 0.3.4)
   puma (~> 5.0)
   pundit (~> 2.2)
-  pundit-matchers (~> 1.8.4)
   rails (~> 7.0.4)
   rails-controller-testing
   rspec-rails (~> 5.0.0)
