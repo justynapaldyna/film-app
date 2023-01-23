@@ -37,7 +37,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
 end
-
+gem 'active_model_serializers', '~> 0.10.12'
 gem 'bootstrap', '~> 5.2.1'
 
 # Use Redis adapter to run Action Cable in production
