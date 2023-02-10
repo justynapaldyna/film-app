@@ -7,6 +7,12 @@ RSpec.describe V2::AdminController, type: :controller do
 
       subject { get :users }
 
+        context 'when data is invalid' do
+          subject { get :users, params: { id: (-1) } }
+
+          it { expect(response.status).to eq(404) }
+        end
+
       before { subject }
 
       it { expect(response.status).to eq(200) }
@@ -15,10 +21,6 @@ RSpec.describe V2::AdminController, type: :controller do
         expect(JSON.parse(response.body)['data'].map { |obj| obj['id'].to_i }).to eq(User.all.ids)
       end
 
-      # context 'when data is invalid' do
-      #   subject { get :users, params: { id: -1 } }
-
-      #   it { expect(response.status).to eq(404) }
-      # end
+        
     end
 end
