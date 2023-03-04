@@ -1,7 +1,7 @@
 require 'active_record/errors'
 class V2::AdminController < ApplicationController
 
-  rescue_from StandardError, :with => :render_400
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   
   def users
     users = User.all
