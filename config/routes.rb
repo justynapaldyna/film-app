@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   namespace :v2 do 
     get 'admin/users'
     get 'admin/movies'
+    get 'admin/show_user/:id', to: 'admin#show_user', as: 'admin_user'
     resources :users
     resources :categories
     resources :movies do 
