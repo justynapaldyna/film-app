@@ -59,7 +59,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_163431) do
     t.string "title"
     t.text "description"
     t.string "movie_length"
-    t.string "string"
     t.string "director"
     t.string "language"
     t.string "rating"

@@ -24,3 +24,5 @@ Category.create(name: "Mockumentary")
 Category.create(name: "Animation")
 Category.create(name: "Biography")
 Category.create(name: "Other category")
+
+

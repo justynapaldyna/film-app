@@ -20,8 +20,9 @@ class MoviesController < ApplicationController
   end
 
   def create
-    authorize @movie
+    
     @movie = current_user.movies.build(movie_params)
+    authorize @movie
 
     respond_to do |format|
       if @movie.save
