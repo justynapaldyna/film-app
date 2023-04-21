@@ -5,6 +5,7 @@ class UserPolicy < ApplicationPolicy
     end
   
     def show?
+      # binding.pry
       user.admin?
     end
   

@@ -43,7 +43,7 @@ RSpec.describe V2::AdminController, type: :controller do
         it { expect(response.status).to eq(200) }
 
         it 'assigns proper object' do
-          expect(JSON.parse(response.body)['data']['id']).to eq((user.id).to_s)
+          expect(JSON.parse(response.body)['data']['id'].to_i).to eq(user.id)
         end 
       end
 
