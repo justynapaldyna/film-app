@@ -13,8 +13,8 @@ class AdminController < ApplicationController
   end
 
   def show_user
+    authorize :user, :show?
     @user = User.find(params[:id])
-    authorize @user, :show?
   end
 
   def edit_user
